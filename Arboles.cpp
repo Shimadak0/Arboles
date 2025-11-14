@@ -7,7 +7,7 @@ struct arbol {
 };
 arbol* crearNodo(int);
 void insertar(arbol*&, int);
-void mostrar(arbol*);
+void mostrar(arbol*, int);
 void buscar(arbol*);
 void preorden(arbol*);
 void inorden(arbol*);
@@ -90,19 +90,31 @@ void insertar(arbol*& arbolf, int n) {
 	}
 	else {
 		int valorRaiz = arbolf->dato;
-		if (n < valorRaiz) {
+		if (n == valorRaiz) {//Evita insertar duplicados
+			return;
+		}
+		else if (n < valorRaiz) {
 			insertar(arbolf->izquierdo, n);
 		}
 		else {
 			insertar(arbolf->derecho, n);
 		}
 	}
-	
+}
+
+void mostrar(arbol* arbol, int contador) {
+	if (arbol == NULL) {
+		return;
+	}
+	else {
+		mostrar(arbol->derecho, contador + 1);
+		for (int i = 0; i < contador; i++) {
+			cout << "     ";
+			}
+		cout << arbol->dato << endl;
+		mostrar(arbol->izquierdo, )
+	}
 
 
 
 }
-
-
-
-
