@@ -5,10 +5,10 @@ struct arbol {
 	arbol* izquierdo;
 	arbol* derecho;
 };
-arbol* crearNodo(int);
+arbol* crearNodo(int,arbol*);
 void insertar(arbol*&, int);
 void mostrar(arbol*, int);
-void buscar(arbol*);
+bool buscar(arbol*, int);
 void preorden(arbol*);
 void inorden(arbol*);
 void postorden(arbol*);
@@ -19,38 +19,50 @@ arbol* nuevoarbol = NULL;
 
 int main() {
 
-	int opcion;
+	int opcion, numero, contador=0;
 	menu:
 	cout << "----------------------------MENU-----------------------------";
-	cout << "1. Insertar nodo en arbol";
-	cout << "2. Mostrar arbol completo";
-	cout << "3. Buscar un elemento en el arbol";
-	cout << "4. Mostrar datos del arbol en preorden";
-	cout << "5. Mostrar datos del arbol en inorden";
-	cout << "6. Mostrar datos del arbol en postorden";
-	cout << "7. Eliminar un nodo del arbol";
-	cout << "8. Salir";
+	cout << "1. Insertar nodo en arbol" << endl;
+	cout << "2. Mostrar arbol completo" << endl;
+	cout << "3. Buscar un elemento en el arbol" << endl;
+	cout << "4. Mostrar datos del arbol en preorden" << endl;
+	cout << "5. Mostrar datos del arbol en inorden" << endl;
+	cout << "6. Mostrar datos del arbol en postorden" << endl;
+	cout << "7. Eliminar un nodo del arbol" << endl;
+	cout << "8. Salir" << endl;
 	cout << "Elija una opcion: ";
 	cin >> opcion;
 
 	switch (opcion) {
 	case 1:
-		int numero;
 		cout << "Digite un numero entero";
 		cin >> numero;
 		insertar(nuevoarbol, numero);
 	case 2:
-		mostrar();
+		cout << "Mostrando arbol completo. " << endl;
+		mostrar(nuevoarbol, contador);
+		system("PAUSE");
 	case 3:
-		buscar();
+		buscar(nuevoarbol, numero);
+		cout << "Digita el numero a buscar";
+		cin >> numero;
+		if (buscar(nuevoarbol, numero) == true) {
+			cout << "El valor " << numero << " ha sido encontrado";
+		}
+		else {
+			cout << "El valor " << numero << "no se encontro en el arbol";
+
+		}
+		cout << endl;
+		system("PAUSE");
 	case 4:
-		preorden();
+	//	preorden();
 	case 5:
-		inorden();
+	//	inorden();
 	case 6:
-		postorden();
+	//	postorden();
 	case 7:
-		eliminar();
+	//	eliminar();
 	case 8:
 		break;
 	default:
@@ -85,7 +97,7 @@ arbol* crearNodo(int n, arbol* npadre) {
 void insertar(arbol*& arbolf, int n) {
 	
 	if (arbolf == nullptr) {
-		arbol* nuevo_nodo = crearNodo(n);
+		arbol* nuevo_nodo = crearNodo(n, arbolf);
 		arbolf = nuevo_nodo;
 	}
 	else {
@@ -112,9 +124,23 @@ void mostrar(arbol* arbol, int contador) {
 			cout << "     ";
 			}
 		cout << arbol->dato << endl;
-		mostrar(arbol->izquierdo, )
+		mostrar(arbol->izquierdo, contador + 1);
 	}
 
+}
 
+bool buscar(arbol* arbol, int n){
+	if (arbol == nullptr) {
+		return false;
+	}
+	else if(arbol->dato == n) {
+		return true; //El valor se encuentra en la raiz del arbol
+	}
+	else if (n < arbol->dato) {
+		return buscar(arbol->izquierdo, n); //Busca el nodo por el lado izquierdo
+	}
+	else {
+		return buscar(arbol->derecho, n); //Busca el nodo por el lado derecho
+	}
 
 }
