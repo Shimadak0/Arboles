@@ -20,58 +20,80 @@ arbol* nuevoarbol = NULL;
 int main() {
 
 	int opcion, numero, contador=0;
-	menu:
-	cout << "----------------------------MENU-----------------------------";
-	cout << "1. Insertar nodo en arbol" << endl;
-	cout << "2. Mostrar arbol completo" << endl;
-	cout << "3. Buscar un elemento en el arbol" << endl;
-	cout << "4. Mostrar datos del arbol en preorden" << endl;
-	cout << "5. Mostrar datos del arbol en inorden" << endl;
-	cout << "6. Mostrar datos del arbol en postorden" << endl;
-	cout << "7. Eliminar un nodo del arbol" << endl;
-	cout << "8. Salir" << endl;
-	cout << "Elija una opcion: ";
-	cin >> opcion;
+	do {
+		system("cls");
+		cout << "----------------------------MENU-----------------------------" << endl;
+		cout << "1. Insertar nodo en arbol" << endl;
+		cout << "2. Mostrar arbol completo" << endl;
+		cout << "3. Buscar un elemento en el arbol" << endl;
+		cout << "4. Mostrar datos del arbol en preorden" << endl;
+		cout << "5. Mostrar datos del arbol en inorden" << endl;
+		cout << "6. Mostrar datos del arbol en postorden" << endl;
+		cout << "7. Eliminar un nodo del arbol" << endl;
+		cout << "8. Salir" << endl;
+		cout << "Elija una opcion: ";
+		cin >> opcion;
 
-	switch (opcion) {
-	case 1:
-		cout << "Digite un numero entero";
-		cin >> numero;
-		insertar(nuevoarbol, numero);
-	case 2:
-		cout << "Mostrando arbol completo. " << endl;
-		mostrar(nuevoarbol, contador);
-		system("PAUSE");
-	case 3:
-		buscar(nuevoarbol, numero);
-		cout << "Digita el numero a buscar";
-		cin >> numero;
-		if (buscar(nuevoarbol, numero) == true) {
-			cout << "El valor " << numero << " ha sido encontrado";
+		switch (opcion) {
+		case 1:
+			cout << "Digite un numero entero";
+			cin >> numero;
+			insertar(nuevoarbol, numero);
+			break;
+		case 2:
+			cout << "Mostrando arbol completo. " << endl;
+			mostrar(nuevoarbol, contador);
+			system("PAUSE");
+			break;
+		case 3:
+			cout << "Digita el numero a buscar";
+			cin >> numero;
+			buscar(nuevoarbol, numero);
+			if (buscar(nuevoarbol, numero) == true) {
+				cout << "El valor " << numero << " ha sido encontrado";
+			}
+			else {
+				cout << "El valor " << numero << "no se encontro en el arbol";
+
+			}
+			cout << endl;
+			system("PAUSE");
+			break;
+		case 4:
+			cout << "Mostrando datos del arbol en Preorden: ";
+			cout << endl;
+			cout << "el listado en preorden es: ";
+			preorden(nuevoarbol);
+			cout << endl;
+			system("pause");
+			break;
+		case 5:
+			cout << "Mostrando datos del arbol en Inorden: ";
+			cout << endl;
+			cout << "el listado en Inorden es: ";
+			inorden(nuevoarbol);
+			cout << endl;
+			system("pause");
+			break;
+		case 6:
+			cout << "Mostrando datos del arbol en Postorden: ";
+			cout << endl;
+			cout << "el listado en Postorden es: ";
+			postorden(nuevoarbol);
+			cout << endl;
+			system("pause");
+			break;
+		case 7:
+			//	eliminar();
+		case 8:
+			break;
+		default:
+			cout << "La opcion no existe, elija otra opcion.";
+
+
 		}
-		else {
-			cout << "El valor " << numero << "no se encontro en el arbol";
 
-		}
-		cout << endl;
-		system("PAUSE");
-	case 4:
-	//	preorden();
-	case 5:
-	//	inorden();
-	case 6:
-	//	postorden();
-	case 7:
-	//	eliminar();
-	case 8:
-		break;
-	default:
-		cout << "La opcion no existe, elija otra opcion.";
-		goto menu;
-
-	}
-
-
+	} while (opcion != 8);
 
 
 }
@@ -143,4 +165,37 @@ bool buscar(arbol* arbol, int n){
 		return buscar(arbol->derecho, n); //Busca el nodo por el lado derecho
 	}
 
+}
+
+void preorden(arbol* arbol) {
+	if (arbol == nullptr) {
+		return;
+	}
+	else {
+		cout << arbol->dato << " - ";
+		preorden(arbol->izquierdo);
+		preorden(arbol->derecho);
+	}
+}
+
+void inorden(arbol* arbol) {
+	if (arbol == nullptr) {
+		return;
+	}
+	else {
+		preorden(arbol->izquierdo);
+		cout << arbol->dato << " - ";
+		preorden(arbol->derecho);
+	}
+}
+
+void postorden(arbol* arbol) {
+	if (arbol == nullptr) {
+		return;
+	}
+	else {
+		preorden(arbol->izquierdo);		
+		preorden(arbol->derecho);
+		cout << arbol->dato << " - ";
+	}
 }
