@@ -36,7 +36,7 @@ int main() {
 
 		switch (opcion) {
 		case 1:
-			cout << "Digite un numero entero";
+			cout << "Digite un numero entero: ";
 			cin >> numero;
 			insertar(nuevoarbol, numero);
 			break;
@@ -89,7 +89,7 @@ int main() {
 			break;
 		default:
 			cout << "La opcion no existe, elija otra opcion.";
-
+			system("pause");
 
 		}
 
