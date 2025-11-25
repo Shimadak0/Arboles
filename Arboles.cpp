@@ -12,7 +12,8 @@ bool buscar(arbol*, int);
 void preorden(arbol*);
 void inorden(arbol*);
 void postorden(arbol*);
-void eliminar(arbol*);
+arbol* minimo(arbol*);
+void eliminar(arbol*, int);
 
 
 arbol* nuevoarbol = NULL;
@@ -84,7 +85,10 @@ int main() {
 			system("pause");
 			break;
 		case 7:
-			//	eliminar();
+			cout << "Teclea el nodo a eliminar: ";
+			cin >> numero;
+			cout << "Eliminando nodo...";
+			eliminar(nuevoarbol, numero);
 		case 8:
 			break;
 		default:
@@ -198,4 +202,52 @@ void postorden(arbol* arbol) {
 		preorden(arbol->derecho);
 		cout << arbol->dato << " - ";
 	}
+}
+
+void eliminar(arbol* arbolel, int dato) {
+	if (arbolel == nullptr) {
+		return;
+	}
+	if (dato < arbolel->dato) { //buscar lado izquierdo
+		eliminar(arbolel->izquierdo, dato);
+	}
+	else if (dato > arbolel->dato) {//buscar derecha
+		eliminar(arbolel->derecho, dato);
+	}
+	else {//Se encuentra el dato
+
+		//Cuando es nodo hoja
+		if (arbolel->izquierdo == nullptr && arbolel->derecho == nullptr) {
+			delete arbolel;
+			arbolel = nullptr;
+		}
+		//Cuando es nodo con una sola hoja
+		else if (arbolel->izquierdo == nullptr) {
+			arbol* temp = arbolel;
+			arbolel = arbolel->derecho;
+			delete temp;
+		}
+		else if (arbolel->derecho == nullptr) {
+			arbol* temp = arbolel;
+			arbolel = arbolel->izquierdo;
+			delete temp;
+		}
+		else {
+			arbol* sucesor = minimo(arbolel->derecho);
+			arbolel->dato = sucesor->dato;
+			eliminar(arbolel->derecho, sucesor->dato);
+		}
+	}
+}
+
+//sacar el minimo
+arbol* minimo(arbol* arbolM) {
+	if (arbolM == nullptr) {
+		return nullptr;
+	}
+	while (arbolM->izquierdo != nullptr) {
+		arbolM = arbolM->izquierdo;
+		
+	}
+	return arbolM;
 }
