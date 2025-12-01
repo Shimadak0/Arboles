@@ -14,6 +14,7 @@ void inorden(arbol*);
 void postorden(arbol*);
 arbol* minimo(arbol*);
 void eliminar(arbol*, int);
+void profundidad(arbol*, int);
 
 
 arbol* nuevoarbol = NULL;
@@ -250,4 +251,28 @@ arbol* minimo(arbol* arbolM) {
 		
 	}
 	return arbolM;
+}
+
+//busqueda a profundidad
+void profundidad(arbol* arbolp, int contador) {
+	int derechores = 0, izquierdores = 0;
+	if (arbolp == nullptr) {
+		return;
+	}
+	else {
+		profundidad(arbolp->derecho, contador + 1);
+		if (arbolp->derecho == nullptr && arbolp->izquierdo == nullptr) {
+			derechores = contador;
+		}
+		profundidad(arbolp->izquierdo, contador + 1);
+		if (arbolp->derecho == nullptr && arbolp->izquierdo == nullptr) {
+			izquierdores = contador;
+		}
+		if (derechores < izquierdores) {
+			cout << "La profundidad es: " << derechores << endl;
+		}
+		else {
+			cout << "La profundidad es: " << izquierdores << endl;
+		}
+	}
 }
